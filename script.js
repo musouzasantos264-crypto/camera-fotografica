@@ -1,460 +1,546 @@
-/* =========================================
-   CURSOR
-========================================= */
+/* =====================================================
+   CURSOR INTERATIVO
+===================================================== */
 
 const cursor = document.querySelector(".cursor");
-const follower = document.querySelector(".cursor-follower");
-
-let mouseX = 0;
-let mouseY = 0;
-
-let followerX = 0;
-let followerY = 0;
+const cursorLight = document.querySelector(".cursor-light");
 
 document.addEventListener("mousemove", (e) => {
 
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
 
-    cursor.style.left = mouseX + "px";
-    cursor.style.top = mouseY + "px";
+    cursorLight.style.left = e.clientX + "px";
+    cursorLight.style.top = e.clientY + "px";
+
 });
 
-function animateCursor() {
 
-    followerX += (mouseX - followerX) * 0.12;
-    followerY += (mouseY - followerY) * 0.12;
+/* =====================================================
+   EFEITO PARALLAX NA CÂMERA
+===================================================== */
 
-    follower.style.left = followerX + "px";
-    follower.style.top = followerY + "px";
+const camera = document.querySelector(".camera-container");
 
-    requestAnimationFrame(animateCursor);
+document.addEventListener("mousemove", (e) => {
+
+    if (!camera) return;
+
+    const x = (window.innerWidth / 2 - e.clientX) / 60;
+    const y = (window.innerHeight / 2 - e.clientY) / 60;
+
+    camera.style.transform =
+        `translate(${x}px, ${y}px)`;
+
+});
+
+
+/* =====================================================
+   MINI JOGO
+   CAPTURE A LUZ
+===================================================== */
+
+const startGame = document.getElementById("start-game");
+const target = document.getElementById("target");
+const gameArea = document.getElementById("game-area");
+const scoreDisplay = document.getElementById("score");
+const gameResult = document.getElementById("game-result");
+const gameMessage = document.querySelector(".game-message");
+
+let score = 0;
+let gameRunning = false;
+
+
+function moveTarget() {
+
+    const areaWidth = gameArea.clientWidth;
+    const areaHeight = gameArea.clientHeight;
+
+    const targetSize = 35;
+
+    const randomX =
+        Math.random() * (areaWidth - targetSize);
+
+    const randomY =
+        Math.random() * (areaHeight - targetSize);
+
+    target.style.left = randomX + "px";
+    target.style.top = randomY + "px";
+
 }
 
-animateCursor();
 
+startGame.addEventListener("click", () => {
 
-/* =========================================
-   CURSOR HOVER
-========================================= */
+    score = 0;
 
-const interactiveElements = document.querySelectorAll(
-    "a, button, .research-card, .fact-card, .timeline-content, .answer"
-);
+    scoreDisplay.textContent = score;
 
-interactiveElements.forEach(element => {
+    gameRunning = true;
 
-    element.addEventListener("mouseenter", () => {
-        follower.classList.add("hover");
-    });
+    gameResult.textContent = "";
 
-    element.addEventListener("mouseleave", () => {
-        follower.classList.remove("hover");
-    });
+    target.style.display = "block";
+
+    startGame.style.display = "none";
+
+    gameMessage.style.display = "none";
+
+    moveTarget();
 
 });
 
 
-/* =========================================
-   MENU MOBILE
-========================================= */
+target.addEventListener("click", () => {
 
-const menuMobile = document.getElementById("menuMobile");
-const nav = document.querySelector("nav");
+    if (!gameRunning) return;
 
-menuMobile.addEventListener("click", () => {
-    nav.classList.toggle("open");
-});
+    score++;
 
-document.querySelectorAll(".nav-link").forEach(link => {
+    scoreDisplay.textContent = score;
 
-    link.addEventListener("click", () => {
-        nav.classList.remove("open");
-    });
+    target.style.transform = "scale(2)";
 
-});
+    setTimeout(() => {
 
+        target.style.transform = "";
 
-/* =========================================
-   CAMERA PARALLAX
-========================================= */
+    }, 100);
 
-const cameraVisual = document.querySelector(".camera-visual");
+    if (score >= 5) {
 
-document.addEventListener("mousemove", (e) => {
+        gameRunning = false;
 
-    if (!cameraVisual) return;
+        target.style.display = "none";
 
-    const x = (window.innerWidth / 2 - e.clientX) / 50;
-    const y = (window.innerHeight / 2 - e.clientY) / 50;
+        gameResult.innerHTML =
+            "🎉 CAPTURA PERFEITA! VOCÊ DOMINOU A LUZ.";
 
-    cameraVisual.style.transform =
-        `rotateY(${x}deg) rotateX(${y}deg)`;
-});
+        startGame.textContent = "JOGAR NOVAMENTE";
 
+        startGame.style.display = "block";
 
-/* =========================================
-   MAGNETIC BUTTONS
-========================================= */
+    } else {
 
-document.querySelectorAll(".magnetic").forEach(button => {
+        moveTarget();
 
-    button.addEventListener("mousemove", (e) => {
-
-        const rect = button.getBoundingClientRect();
-
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        button.style.transform =
-            `translate(${x * .15}px, ${y * .15}px)`;
-    });
-
-    button.addEventListener("mouseleave", () => {
-        button.style.transform = "";
-    });
+    }
 
 });
 
 
-/* =========================================
-   RESEARCH MODAL
-========================================= */
+/* =====================================================
+   FLASHCARDS
+===================================================== */
 
-const modal = document.getElementById("modal");
-const modalClose = document.getElementById("modalClose");
+function flipCard(card) {
 
-const modalNumber = document.getElementById("modalNumber");
-const modalTitle = document.getElementById("modalTitle");
-const modalText = document.getElementById("modalText");
-const modalFact = document.getElementById("modalFact");
+    card.classList.toggle("flipped");
 
-const modalData = {
+}
 
-    history: {
-        number: "01",
-        title: "História da fotografia",
-        text:
-            "A história da fotografia está ligada ao estudo da luz e da óptica. Antes mesmo da fotografia existir, a câmera escura já era utilizada para observar como a luz poderia projetar uma imagem. Com o passar dos anos surgiram processos fotográficos, filmes, câmeras mais compactas e, posteriormente, tecnologias digitais.",
-        fact:
-            "A câmera escura é considerada um dos princípios fundamentais que ajudaram a desenvolver a fotografia."
+
+/* =====================================================
+   PARTES DA CÂMERA
+===================================================== */
+
+const partTitle = document.getElementById("part-title");
+const partDescription = document.getElementById("part-description");
+
+const cameraLabels = document.querySelectorAll(".camera-label");
+
+const parts = {
+
+    "LENTE": {
+        title: "LENTE",
+        description:
+            "A lente direciona e focaliza a luz que entra na câmera. Ela influencia o foco, o enquadramento e a perspectiva da fotografia."
     },
 
-    camera: {
-        number: "02",
-        title: "Como funciona uma câmera?",
-        text:
-            "Uma câmera funciona controlando a entrada de luz. A luz entra pela lente, é direcionada e focalizada, passa pelo sistema de obturação e chega ao material fotossensível. Nas câmeras digitais, o sensor transforma essa informação luminosa em dados que formam a fotografia.",
-        fact:
-            "Uma fotografia pode ser entendida como o registro controlado da luz."
+    "OBTURADOR": {
+        title: "OBTURADOR",
+        description:
+            "O obturador controla durante quanto tempo a luz chega ao sensor. Velocidades diferentes podem congelar ou criar movimento na imagem."
     },
 
-    parts: {
-        number: "03",
-        title: "Partes da câmera",
-        text:
-            "Entre os principais componentes estão a lente, o obturador, o sensor ou filme, o visor e os controles de exposição. Cada parte possui uma função específica e todas trabalham juntas para registrar a imagem.",
-        fact:
-            "A lente não apenas amplia ou aproxima: ela também influencia o campo de visão, o foco e a aparência da fotografia."
+    "SENSOR": {
+        title: "SENSOR",
+        description:
+            "O sensor recebe a luz e transforma essa informação em sinais elétricos que serão processados para formar a fotografia digital."
     },
 
-    evolution: {
-        number: "04",
-        title: "A evolução das câmeras",
-        text:
-            "As câmeras passaram por grandes transformações. Equipamentos antigos dependiam de processos mais complexos e filmes. Depois vieram as câmeras digitais, que utilizam sensores. Atualmente, os smartphones possuem câmeras pequenas e sofisticadas capazes de realizar processamento digital das imagens.",
-        fact:
-            "Atualmente, muitas pessoas carregam uma câmera no bolso sem perceber o nível de tecnologia presente em um celular."
+    "FLASH": {
+        title: "FLASH",
+        description:
+            "O flash produz uma fonte de luz adicional para iluminar uma cena, principalmente quando existe pouca iluminação disponível."
     }
 
 };
 
-document.querySelectorAll(".research-card").forEach(card => {
 
-    card.addEventListener("click", () => {
+cameraLabels.forEach(label => {
 
-        const key = card.dataset.modal;
-        const data = modalData[key];
+    label.addEventListener("mouseenter", () => {
 
-        modalNumber.textContent = data.number;
-        modalTitle.textContent = data.title;
-        modalText.textContent = data.text;
-        modalFact.textContent = data.fact;
+        const name = label.textContent.trim();
 
-        modal.classList.add("open");
+        partTitle.textContent =
+            parts[name].title;
 
-        document.body.classList.add("no-scroll");
-    });
-
-});
-
-function closeModal() {
-
-    modal.classList.remove("open");
-    document.body.classList.remove("no-scroll");
-}
-
-modalClose.addEventListener("click", closeModal);
-
-modal.addEventListener("click", (e) => {
-
-    if (e.target === modal) {
-        closeModal();
-    }
-
-});
-
-document.addEventListener("keydown", (e) => {
-
-    if (e.key === "Escape") {
-        closeModal();
-    }
-
-});
-
-
-/* =========================================
-   FACT CARDS
-========================================= */
-
-document.querySelectorAll(".fact-card").forEach(card => {
-
-    card.addEventListener("click", () => {
-
-        card.classList.toggle("flipped");
+        partDescription.textContent =
+            parts[name].description;
 
     });
 
 });
 
 
-/* =========================================
-   MECANISMO INTERATIVO
-========================================= */
-
-const mechanismSteps = document.querySelectorAll(".mechanism-step");
-
-mechanismSteps.forEach(step => {
-
-    step.addEventListener("mouseenter", () => {
-
-        mechanismSteps.forEach(item => {
-            item.classList.remove("active");
-        });
-
-        step.classList.add("active");
-
-    });
-
-});
-
-
-/* =========================================
+/* =====================================================
    QUIZ
-========================================= */
+===================================================== */
 
 const questions = [
 
     {
         question:
-            "O que uma câmera digital utiliza para registrar a luz?",
+            "Qual componente controla o tempo de exposição?",
+
         answers: [
-            "Filme fotográfico",
-            "Sensor digital",
-            "Papel",
-            "Espelho"
+            "Sensor",
+            "Obturador",
+            "Flash",
+            "Visor"
         ],
+
         correct: 1
     },
 
     {
         question:
-            "Qual componente controla o tempo de exposição?",
-        answers: [
-            "Obturador",
-            "Flash",
-            "Tripé",
-            "Visor"
-        ],
-        correct: 0
-    },
+            "O que uma câmera digital utiliza para capturar a luz?",
 
-    {
-        question:
-            "O que é essencial para que uma fotografia seja formada?",
         answers: [
-            "Som",
-            "Calor",
-            "Luz",
-            "Vento"
+            "Filme químico",
+            "Papel",
+            "Sensor",
+            "Espelho"
         ],
+
         correct: 2
     },
 
     {
         question:
-            "Qual destes é um princípio relacionado à origem da fotografia?",
-        answers: [
-            "Câmera escura",
-            "Televisão",
-            "Rádio",
-            "Impressora"
-        ],
-        correct: 0
-    },
+            "Qual elemento direciona a luz para dentro da câmera?",
 
-    {
-        question:
-            "Qual equipamento moderno possui câmeras integradas?",
-        answers: [
-            "Celular",
-            "Calculadora simples",
-            "Relógio analógico",
-            "Régua"
-        ],
-        correct: 0
-    },
-
-    {
-        question:
-            "Qual elemento influencia o enquadramento e o campo de visão?",
         answers: [
             "Lente",
             "Bateria",
-            "Botão liga/desliga",
-            "Cartão de memória"
+            "Cartão de memória",
+            "Tripé"
         ],
+
+        correct: 0
+    },
+
+    {
+        question:
+            "A fotografia depende principalmente de qual elemento?",
+
+        answers: [
+            "Som",
+            "Luz",
+            "Temperatura",
+            "Velocidade"
+        ],
+
+        correct: 1
+    },
+
+    {
+        question:
+            "Qual destes dispositivos também possui câmera digital?",
+
+        answers: [
+            "Smartphone",
+            "Lápis",
+            "Régua",
+            "Caderno"
+        ],
+
         correct: 0
     }
 
 ];
 
-let currentQuestion = 0;
-let scoreQuiz = 0;
-let answered = false;
 
-const questionText = document.getElementById("questionText");
-const questionNumber = document.getElementById("questionNumber");
-const answersContainer = document.getElementById("answers");
-const quizProgress = document.getElementById("quizProgress");
-const quizResult = document.getElementById("quizResult");
-const nextQuestion = document.getElementById("nextQuestion");
+let currentQuestion = 0;
+let quizScore = 0;
+
+const questionElement =
+    document.getElementById("question");
+
+const answersElement =
+    document.getElementById("answers");
+
+const questionNumber =
+    document.getElementById("question-number");
+
+const progressBar =
+    document.getElementById("progress-bar");
+
+const quizResult =
+    document.getElementById("quiz-result");
+
 
 function loadQuestion() {
 
-    answered = false;
+    const q = questions[currentQuestion];
 
-    const question = questions[currentQuestion];
+    questionElement.textContent =
+        q.question;
 
     questionNumber.textContent =
-        `QUESTÃO ${String(currentQuestion + 1).padStart(2, "0")}`;
+        currentQuestion + 1;
 
-    questionText.textContent = question.question;
+    progressBar.style.width =
+        ((currentQuestion + 1) / questions.length * 100) + "%";
 
-    answersContainer.innerHTML = "";
+    answersElement.innerHTML = "";
 
-    quizResult.textContent = "";
+    q.answers.forEach((answer, index) => {
 
-    const progress =
-        ((currentQuestion) / questions.length) * 100;
+        const button =
+            document.createElement("button");
 
-    quizProgress.style.width = `${progress}%`;
+        button.classList.add("answer");
 
-    question.answers.forEach((answer, index) => {
-
-        const button = document.createElement("button");
-
-        button.className = "answer";
         button.textContent = answer;
 
         button.addEventListener("click", () => {
 
-            if (answered) return;
-
-            answered = true;
-
-            const buttons =
-                answersContainer.querySelectorAll(".answer");
-
-            buttons.forEach((btn, i) => {
-
-                if (i === question.correct) {
-                    btn.classList.add("correct");
-                }
-
-            });
-
-            if (index === question.correct) {
-
-                scoreQuiz++;
-
-                quizResult.textContent =
-                    "✓ CORRETO! Muito bem.";
-
-            } else {
-
-                button.classList.add("wrong");
-
-                quizResult.textContent =
-                    "✕ INCORRETO. Observe a resposta correta.";
-            }
+            checkAnswer(index, button);
 
         });
 
-        answersContainer.appendChild(button);
+        answersElement.appendChild(button);
 
     });
 
 }
 
-nextQuestion.addEventListener("click", () => {
 
-    if (!answered) {
+function checkAnswer(index, button) {
 
-        quizResult.textContent =
-            "Escolha uma resposta primeiro.";
+    const correct =
+        questions[currentQuestion].correct;
 
-        return;
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    buttons.forEach(btn => {
+
+        btn.disabled = true;
+
+    });
+
+
+    if (index === correct) {
+
+        button.classList.add("correct");
+
+        quizScore++;
+
+    } else {
+
+        button.classList.add("wrong");
+
+        buttons[correct].classList.add("correct");
+
     }
 
-    currentQuestion++;
 
-    if (currentQuestion >= questions.length) {
+    setTimeout(() => {
 
-        showQuizResult();
+        currentQuestion++;
 
-        return;
+        if (currentQuestion < questions.length) {
+
+            loadQuestion();
+
+        } else {
+
+            finishQuiz();
+
+        }
+
+    }, 900);
+
+}
+
+
+function finishQuiz() {
+
+    questionElement.textContent =
+        "QUIZ FINALIZADO!";
+
+    answersElement.innerHTML = "";
+
+    progressBar.style.width = "100%";
+
+    let message = "";
+
+    if (quizScore === 5) {
+
+        message =
+            "🏆 PERFEITO! Você domina fotografia.";
+
+    } else if (quizScore >= 3) {
+
+        message =
+            "⚡ MUITO BOM! Você conhece bastante sobre câmeras.";
+
+    } else {
+
+        message =
+            "📸 Continue estudando e tente novamente.";
+
     }
 
-    loadQuestion();
+    quizResult.innerHTML =
+        `Você acertou <strong>${quizScore}/5</strong><br><br>${message}`;
+
+}
+
+
+/* =====================================================
+   INICIAR QUIZ
+===================================================== */
+
+loadQuestion();
+
+
+/* =====================================================
+   ANIMAÇÃO DOS ELEMENTOS AO ENTRAR NA TELA
+===================================================== */
+
+const observer =
+    new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .15
+        }
+    );
+
+
+document
+    .querySelectorAll(
+        ".process-card, .history-card, .flashcard, .timeline-item, .gallery-item, .video-card"
+    )
+    .forEach(element => {
+
+        observer.observe(element);
+
+    });
+
+
+/* =====================================================
+   EFEITO DE BRILHO AO PASSAR O MOUSE
+===================================================== */
+
+const interactiveElements =
+    document.querySelectorAll(
+        ".process-card, .history-card, .school-card, .students-card, .video-card"
+    );
+
+
+interactiveElements.forEach(element => {
+
+    element.addEventListener("mousemove", (e) => {
+
+        const rect =
+            element.getBoundingClientRect();
+
+        const x =
+            e.clientX - rect.left;
+
+        const y =
+            e.clientY - rect.top;
+
+        element.style.background =
+            `radial-gradient(
+                circle at ${x}px ${y}px,
+                rgba(0,234,255,.10),
+                #081018 45%
+            )`;
+
+    });
+
+
+    element.addEventListener("mouseleave", () => {
+
+        element.style.background =
+            "#081018";
+
+    });
 
 });
 
-function showQuizResult() {
 
-    quizProgress.style.width = "100%";
+/* =====================================================
+   EFEITO DE TECLADO
+===================================================== */
 
-    questionNumber.textContent = "RESULTADO";
+document.addEventListener("keydown", (event) => {
 
-    questionText.textContent =
-        `Você acertou ${scoreQuiz} de ${questions.length} perguntas!`;
+    if (event.key === "Escape") {
 
-    answersContainer.innerHTML = "";
+        document
+            .querySelectorAll(".flashcard")
+            .forEach(card => {
 
-    let message;
+                card.classList.remove("flipped");
 
-    if (scoreQuiz === questions.length) {
-        message = "PERFEITO! Você domina a fotografia.";
-    } else if (scoreQuiz >= 4) {
-        message = "MUITO BOM! Você aprendeu bastante.";
-    } else if (scoreQuiz >= 2) {
-        message = "BOM COMEÇO! Continue explorando a pesquisa.";
-    } else {
-        message = "QUE TAL REVISAR OS TEMAS E TENTAR NOVAMENTE?";
+            });
+
     }
 
-    quizResult.textContent = message;
+});
 
-    nextQuestion.textContent = "RECOMEÇAR";
 
-    next
+/* =====================================================
+   MENU - SCROLL SUAVE
+===================================================== */
+
+document.querySelectorAll("nav a").forEach(link => {
+
+    link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        const target =
+            document.querySelector(this.getAttribute("href"));
+
+        if (target) {
+
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
+});

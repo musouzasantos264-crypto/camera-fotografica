@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câmera: da luz à fotografia</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- CURSOR -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- FUNDO ANIMADO -->
+    <div class="background">
+        <div class="grid"></div>
+
+        <div class="light-beam beam1"></div>
+        <div class="light-beam beam2"></div>
+        <div class="light-beam beam3"></div>
+
+        <div class="floating-particle p1"></div>
+        <div class="floating-particle p2"></div>
+        <div class="floating-particle p3"></div>
+        <div class="floating-particle p4"></div>
+        <div class="floating-particle p5"></div>
+        <div class="floating-particle p6"></div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <header class="header">
+
+        <div class="logo">
+            <div class="logo-camera">
+                <span></span>
+            </div>
+            <div>
+                <strong>CLAUDIO<br>MORELLI</strong>
+                <small>PROJETO DE PESQUISA</small>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#inicio" class="nav-link active">Início</a>
+            <a href="#pesquisa" class="nav-link">Pesquisa</a>
+            <a href="#evidencias" class="nav-link">Evidências</a>
+            <a href="#sobre" class="nav-link">Sobre</a>
+        </nav>
+
+        <button class="menu-mobile" id="menuMobile">
+            ☰
+        </button>
+    </header>
+
+
+    <!-- HERO -->
+    <main id="inicio">
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <div class="tag">
+                    <span class="dot"></span>
+                    PROJETO DE PESQUISA • FOTOGRAFIA
+                </div>
+
+                <h1>
+                    CÂMERA:
+                    <span>DA LUZ</span>
+                    À FOTOGRAFIA
+                </h1>
+
+                <p class="hero-description">
+                    Uma viagem pela história da fotografia, pelo funcionamento
+                    das câmeras e pela evolução da tecnologia que transformou
+                    a maneira como registramos o mundo.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#pesquisa" class="btn-primary magnetic">
+                        EXPLORAR PESQUISA
+                        <span>→</span>
+                    </a>
+
+                    <button class="btn-secondary magnetic" id="startGame">
+                        JOGAR • CAPTURE A LUZ
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div>
+                        <strong>04</strong>
+                        <span>SUBTEMAS</span>
+                    </div>
+
+                    <div>
+                        <strong>06</strong>
+                        <span>CURIOSIDADES</span>
+                    </div>
+
+                    <div>
+                        <strong>05</strong>
+                        <span>EVIDÊNCIAS</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CÂMERA 3D / VISUAL -->
+            <div class="camera-area">
+
+                <div class="camera-ring ring1"></div>
+                <div class="camera-ring ring2"></div>
+                <div class="camera-ring ring3"></div>
+
+                <div class="camera-visual">
+
+                    <div class="camera-body">
+
+                        <div class="camera-top"></div>
+
+                        <div class="camera-viewfinder"></div>
+
+                        <div class="camera-lens">
+                            <div class="lens-glass">
+                                <div class="lens-reflection"></div>
+                            </div>
+                        </div>
+
+                        <div class="camera-button"></div>
+
+                        <div class="camera-brand">
+                            LIGHT<span>CAM</span>
+                        </div>
+
+                    </div>
+
+                    <div class="flash-light"></div>
+
+                </div>
+
+                <div class="camera-label label1">
+                    <span>01</span>
+                    LUZ
+                </div>
+
+                <div class="camera-label label2">
+                    <span>02</span>
+                    LENTE
+                </div>
+
+                <div class="camera-label label3">
+                    <span>03</span>
+                    SENSOR
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FAIXA -->
+        <section class="moving-strip">
+            <div>
+                FOTOGRAFIA • LUZ • CÂMERA • HISTÓRIA • TECNOLOGIA •
+                FOTOGRAFIA • LUZ • CÂMERA • HISTÓRIA • TECNOLOGIA •
+            </div>
+        </section>
+
+
+        <!-- MINI JOGO -->
+        <section class="game-section" id="game">
+
+            <div class="section-heading">
+                <span class="section-number">00 / INTERAÇÃO</span>
+                <h2>CAPTURE A <span>LUZ</span></h2>
+                <p>
+                    Antes de começar a pesquisa, teste sua habilidade.
+                    Clique nos pontos de luz que aparecem na câmera.
+                </p>
+            </div>
+
+            <div class="game-container">
+
+                <div class="game-info">
+                    <div class="game-score">
+                        <span>PONTOS</span>
+                        <strong id="score">0</strong>
+                    </div>
+
+                    <div class="game-time">
+                        <span>TEMPO</span>
+                        <strong id="time">20</strong>
+                    </div>
+
+                    <button id="gameButton" class="game-start">
+                        INICIAR JOGO
+                    </button>
+                </div>
+
+                <div class="game-screen" id="gameScreen">
+
+                    <div class="game-camera">
+
+                        <div class="game-lens">
+                            <div class="game-lens-inner"></div>
+                        </div>
+
+                        <div class="game-display">
+                            <span>LIGHTCAM</span>
+                            <small>CAPTURE THE LIGHT</small>
+                        </div>
+
+                    </div>
+
+                    <div id="lightTarget" class="light-target">
+                        ✦
+                    </div>
+
+                    <div class="game-message" id="gameMessage">
+                        CLIQUE EM "INICIAR JOGO"
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PESQUISA -->
+        <section class="research-section" id="pesquisa">
+
+            <div class="section-heading">
+                <span class="section-number">01 / PESQUISA</span>
+                <h2>ENTENDENDO A <span>FOTOGRAFIA</span></h2>
+                <p>
+                    Clique nos cards para descobrir os principais temas
+                    estudados nesta pesquisa.
+                </p>
+            </div>
+
+
+            <div class="research-grid">
+
+                <!-- CARD 1 -->
+                <article class="research-card tilt-card" data-modal="history">
+
+                    <div class="card-number">01</div>
+
+                    <div class="card-icon">
+                        <span>◉</span>
+                    </div>
+
+                    <h3>História da fotografia</h3>
+
+                    <p>
+                        Da câmera escura aos equipamentos digitais,
+                        conheça a trajetória da fotografia.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>EXPLORAR</span>
+                        <strong>↗</strong>
+                    </div>
+
+                </article>
+
+
+                <!-- CARD 2 -->
+                <article class="research-card tilt-card" data-modal="camera">
+
+                    <div class="card-number">02</div>
+
+                    <div class="card-icon">
+                        <span>⌾</span>
+                    </div>
+
+                    <h3>Como funciona uma câmera?</h3>
+
+                    <p>
+                        Entenda como luz, lente, obturador e sensor
+                        trabalham juntos para formar uma imagem.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>EXPLORAR</span>
+                        <strong>↗</strong>
+                    </div>
+
+                </article>
+
+
+                <!-- CARD 3 -->
+                <article class="research-card tilt-card" data-modal="parts">
+
+                    <div class="card-number">03</div>
+
+                    <div class="card-icon">
+                        <span>◈</span>
+                    </div>
+
+                    <h3>Partes da câmera</h3>
+
+                    <p>
+                        Descubra as principais peças de uma câmera
+                        e a função de cada uma delas.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>EXPLORAR</span>
+                        <strong>↗</strong>
+                    </div>
+
+                </article>
+
+
+                <!-- CARD 4 -->
+                <article class="research-card tilt-card" data-modal="evolution">
+
+                    <div class="card-number">04</div>
+
+                    <div class="card-icon">
+                        <span>⚡</span>
+                    </div>
+
+                    <h3>A evolução das câmeras</h3>
+
+                    <p>
+                        Compare câmeras antigas, digitais e os
+                        smartphones atuais.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>EXPLORAR</span>
+                        <strong>↗</strong>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- LINHA DO TEMPO -->
+        <section class="timeline-section">
+
+            <div class="section-heading">
+                <span class="section-number">02 / EVOLUÇÃO</span>
+                <h2>UMA HISTÓRIA EM <span>IMAGENS</span></h2>
+            </div>
+
+            <div class="timeline">
+
+                <div class="timeline-line"></div>
+
+                <article class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+                        <span>ANTES DA FOTOGRAFIA</span>
+                        <h3>Câmera Escura</h3>
+                        <p>
+                            Um dos princípios que ajudaram no desenvolvimento
+                            da fotografia. A luz atravessava uma pequena
+                            abertura e projetava uma imagem invertida.
+                        </p>
+                    </div>
+
+                    <div class="timeline-year">01</div>
+
+                </article>
+
+
+                <article class="timeline-item reverse">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+                        <span>ERA ANALÓGICA</span>
+                        <h3>Filme Fotográfico</h3>
+                        <p>
+                            As câmeras passaram a utilizar filmes sensíveis
+                            à luz para registrar permanentemente as imagens.
+                        </p>
+                    </div>
+
+                    <div class="timeline-year">02</div>
+
+                </article>
+
+
+                <article class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+                        <span>REVOLUÇÃO DIGITAL</span>
+                        <h3>Sensores digitais</h3>
+                        <p>
+                            Os sensores substituíram os filmes em muitas
+                            câmeras, permitindo visualizar as fotografias
+                            quase instantaneamente.
+                        </p>
+                    </div>
+
+                    <div class="timeline-year">03</div>
+
+                </article>
+
+
+                <article class="timeline-item reverse">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+                        <span>ATUALIDADE</span>
+                        <h3>Câmera no celular</h3>
+                        <p>
+                            Smartphones colocaram câmeras cada vez mais
+                            avançadas no bolso de milhões de pessoas.
+                        </p>
+                    </div>
+
+                    <div class="timeline-year">04</div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMO FUNCIONA -->
+        <section class="how-section">
+
+            <div class="section-heading">
+                <span class="section-number">03 / MECANISMO</span>
+                <h2>COMO UMA FOTO <span>ACONTECE?</span></h2>
+            </div>
+
+            <div class="mechanism">
+
+                <div class="mechanism-camera">
+
+                    <div class="mechanism-body">
+
+                        <div class="mechanism-lens">
+                            <div></div>
+                        </div>
+
+                        <div class="mechanism-shutter"></div>
+
+                        <div class="mechanism-sensor">
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                    <div class="light-rays">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                    </div>
+
+                </div>
+
+                <div class="mechanism-info">
+
+                    <div class="mechanism-step active" data-step="0">
+                        <span>01</span>
+                        <div>
+                            <h3>A luz entra</h3>
+                            <p>
+                                A luz refletida pelos objetos entra pela
+                                lente da câmera.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mechanism-step" data-step="1">
+                        <span>02</span>
+                        <div>
+                            <h3>A lente direciona</h3>
+                            <p>
+                                As lentes ajudam a direcionar e focalizar
+                                a luz para formar a imagem.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mechanism-step" data-step="2">
+                        <span>03</span>
+                        <div>
+                            <h3>O obturador controla</h3>
+                            <p>
+                                Ele controla durante quanto tempo o sensor
+                                fica exposto à luz.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mechanism-step" data-step="3">
+                        <span>04</span>
+                        <div>
+                            <h3>O sensor registra</h3>
+                            <p>
+                                Em uma câmera digital, o sensor transforma
+                                a informação luminosa em dados digitais.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CURIOSIDADES -->
+        <section class="facts-section">
+
+            <div class="section-heading">
+                <span class="section-number">04 / CURIOSIDADES</span>
+                <h2>MITO OU <span>VERDADE?</span></h2>
+                <p>
+                    Clique nos cards para revelar a resposta.
+                </p>
+            </div>
+
+            <div class="facts-grid">
+
+                <article class="fact-card">
+                    <div class="fact-front">
+                        <span>01</span>
+                        <h3>A câmera escura existe antes da fotografia.</h3>
+                        <small>CLIQUE PARA REVELAR</small>
+                    </div>
+
+                    <div class="fact-back true">
+                        <strong>VERDADE</strong>
+                        <p>
+                            A câmera escura é um princípio óptico antigo
+                            que ajudou no desenvolvimento da fotografia.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="fact-card">
+                    <div class="fact-front">
+                        <span>02</span>
+                        <h3>Toda câmera precisa de filme.</h3>
+                        <small>CLIQUE PARA REVELAR</small>
+                    </div>
+
+                    <div class="fact-back false">
+                        <strong>MITO</strong>
+                        <p>
+                            Câmeras digitais utilizam sensores para registrar
+                            a imagem em vez de filme fotográfico.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="fact-card">
+                    <div class="fact-front">
+                        <span>03</span>
+                        <h3>A lente influencia a fotografia.</h3>
+                        <small>CLIQUE PARA REVELAR</small>
+                    </div>
+
+                    <div class="fact-back true">
+                        <strong>VERDADE</strong>
+                        <p>
+                            A lente influencia fatores como enquadramento,
+                            foco e aparência da imagem.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="fact-card">
+                    <div class="fact-front">
+                        <span>04</span>
+                        <h3>O obturador controla o tempo de exposição.</h3>
+                        <small>CLIQUE PARA REVELAR</small>
+                    </div>
+
+                    <div class="fact-back true">
+                        <strong>VERDADE</strong>
+                        <p>
+                            A velocidade do obturador determina por quanto
+                            tempo a luz entra na câmera.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="fact-card">
+                    <div class="fact-front">
+                        <span>05</span>
+                        <h3>A fotografia depende da luz.</h3>
+                        <small>CLIQUE PARA REVELAR</small>
+                    </div>
+
+                    <div class="fact-back true">
+                        <strong>VERDADE</strong>
+                        <p>
+                            Sem luz não há informação luminosa suficiente
+                            para formar uma fotografia.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="fact-card">
+                    <div class="fact-front">
+                        <span>06</span>
+                        <h3>Câmeras digitais usam sensores em vez de filme.</h3>
+                        <small>CLIQUE PARA REVELAR</small>
+                    </div>
+
+                    <div class="fact-back true">
+                        <strong>VERDADE</strong>
+                        <p>
+                            Sensores digitais capturam a luz e transformam
+                            essas informações em dados.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUIZ -->
+        <section class="quiz-section">
+
+            <div class="section-heading">
+                <span class="section-number">05 / DESAFIO</span>
+                <h2>QUIZ DA <span>FOTOGRAFIA</span></h2>
+                <p>
+                    Teste o que você aprendeu durante a pesquisa.
+                </p>
+            </div>
+
+            <div class="quiz-container">
+
+                <div class="quiz-progress">
+                    <div id="quizProgress"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <span id="questionNumber">QUESTÃO 01</span>
+
+                    <h3 id="questionText">
+                        Carregando pergunta...
+                    </h3>
+
+                    <div id="answers" class="answers"></div>
+                </div>
+
+                <div class="quiz-footer">
+                    <span id="quizResult"></span>
+
+                    <button id="nextQuestion" class="btn-primary">
+                        PRÓXIMA →
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EVIDÊNCIAS -->
+        <section class="evidence-section" id="evidencias">
+
+            <div class="section-heading">
+                <span class="section-number">06 / EVIDÊNCIAS</span>
+                <h2>AULA <span>PRÁTICA</span></h2>
+
+                <p>
+                    Durante a atividade prática, foram observados
+                    enquadramento, iluminação e composição das fotografias.
+                </p>
+            </div>
+
+            <div class="evidence-gallery">
+
+                <div class="gallery-item large">
+                    <div class="fake-photo photo1">
+                        <span>FOTOGRAFIA 01</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="fake-photo photo2">
+                        <span>FOTOGRAFIA 02</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="fake-photo photo3">
+                        <span>FOTOGRAFIA 03</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item video">
+                    <div class="fake-video">
+                        <div class="play-button">▶</div>
+                        <span>VÍDEO 01</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item video">
+                    <div class="fake-video second">
+                        <div class="play-button">▶</div>
+                        <span>VÍDEO 02</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="evidence-note">
+                <span>●</span>
+                3 IMAGENS + 2 VÍDEOS DA ATIVIDADE PRÁTICA
+            </div>
+
+        </section>
+
+
+        <!-- SOBRE -->
+        <section class="about-section" id="sobre">
+
+            <div class="about-camera">
+                <div class="about-lens"></div>
+            </div>
+
+            <div class="about-content">
+
+                <span class="section-number">07 / SOBRE O PROJETO</span>
+
+                <h2>
+                    DA LUZ NASCE
+                    <span>UMA HISTÓRIA.</span>
+                </h2>
+
+                <p>
+                    Este projeto apresenta uma pesquisa sobre câmeras
+                    fotográficas e o funcionamento da fotografia,
+                    explorando desde os princípios ópticos até as
+                    tecnologias presentes nos celulares atuais.
+                </p>
+
+                <div class="students">
+
+                    <div class="student">
+                        <span>GRUPO</span>
+                        <strong>Isadora</strong>
+                    </div>
+
+                    <div class="student">
+                        <span>GRUPO</span>
+                        <strong>Kamilly</strong>
+                    </div>
+
+                    <div class="student">
+                        <span>TURMA</span>
+                        <strong>2º G</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-logo">
+            <div class="logo-camera small"></div>
+
+            <div>
+                <strong>CLAUDIO MORELLI</strong>
+                <span>CÂMERA: DA LUZ À FOTOGRAFIA</span>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <span>ISADORA • KAMILLY</span>
+            <span>2º ANO G</span>
+        </div>
+
+        <div class="footer-year">
+            2026
+        </div>
+
+    </footer>
+
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+
+        <div class="modal-box">
+
+            <button class="modal-close" id="modalClose">
+                ×
+            </button>
+
+            <span class="modal-number" id="modalNumber">01</span>
+
+            <h2 id="modalTitle">Título</h2>
+
+            <div class="modal-line"></div>
+
+            <p id="modalText">
+                Texto.
+            </p>
+
+            <div class="modal-fact">
+                <span>VOCÊ SABIA?</span>
+                <p id="modalFact"></p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTÃO VOLTAR AO TOPO -->
+    <button id="topButton" class="top-button">
+        ↑
+    </button>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
